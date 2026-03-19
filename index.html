@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Ahmed Shaban Digital Card</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@600&display=swap" rel="stylesheet">
 
   <style>
@@ -195,7 +194,6 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* تأثير الضوء والـ hover - فقط على الأجهزة التي تدعم hover (ديسكتوب) */
     @media (hover: hover) {
       .links a::after {
         content: "";
@@ -304,7 +302,8 @@
       </a>
     </div>
 
-    <a class="download-btn" id="downloadQR">Download Link</a>
+    <!-- زر التحميل - ينزل الرابط كملف نصي -->
+    <a class="download-btn" id="downloadBtn">Download Link</a>
   </div>
 
   <script>
@@ -332,12 +331,18 @@
       setTimeout(showCard, 1500);
     });
 
-    // تحميل الرابط كنص
-    document.getElementById("downloadQR").addEventListener("click", e => {
+    // زر التحميل - ينزل الرابط كملف نصي على الجهاز
+    document.getElementById("downloadBtn").addEventListener("click", function(e) {
       e.preventDefault();
-      const pageUrl = window.location.href;
-      const blob = new Blob([pageUrl], { type: "text/plain;charset=utf-8" });
-      saveAs(blob, "Ahmed-Shaban-Card.txt");
+      const url = "https://mr8973896-collab.github.io/Ahmed-Shaban/";
+      const blob = new Blob([url], { type: "text/plain;charset=utf-8" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "Ahmed-Shaban-Link.txt";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(a.href);
     });
   </script>
 </body>
